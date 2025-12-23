@@ -1,2 +1,10 @@
-node_modules
-.env
+# Ignore node_modules in all subfolders
+**/node_modules/
+
+# Ignore environment variables (crucial for AWS/Security)
+**/.env
+
+# Ignore system files
+.DS_Store
+dist/
+build/
