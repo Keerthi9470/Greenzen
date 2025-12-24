@@ -1,11 +1,16 @@
 const express=require('express')
 const mongoose=require("mongoose")
-require("dotenv").config()
+const dotenv=require("dotenv")
+const authRoutes=require("./routes/authRoutes.js")
+
+dotenv.config()
 
 const app=express()
 
 //middleware
 app.use(express.json())
+
+app.use("/api/auth",authRoutes)
 
 const connectDB=async()=>{
     try{
@@ -18,11 +23,8 @@ const connectDB=async()=>{
     }
 }
 
-connectDB()
-
-app.get('/',(req,res)=>{
-    res.send("app is running")
-})
-
 const PORT=process.env.PORT || 8000
-app.listen(PORT,()=>console.log(`app is running on ${PORT}`))
+
+connectDB().then(() => {
+    app.listen(PORT, () => console.log(`GreenZen app is running on ${PORT}`));
+});

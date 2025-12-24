@@ -26,20 +26,19 @@ const userSchema=new mongoose.Schema({
 
 
 //pre-save hook to bcrypt password
-userSchema.pre("save", async function (next) {
-    // Only hash the password if it has been modified (or is new)
+// Remove "next" from the arguments
+userSchema.pre("save", async function () { 
+    // "this" still refers to the user document
     if (!this.isModified("password")) {
-        return next();
+        return; // Just return, no next() needed
     }
 
     try {
-        // Generate a salt (extra randomness)
         const salt = await bcrypt.genSalt(10);
-        // Hash the password using the salt
         this.password = await bcrypt.hash(this.password, salt);
-        next();
+        // No next() call here
     } catch (err) {
-        next(err);
+        throw new Error(err); // Throwing an error stops the save process
     }
 });
 

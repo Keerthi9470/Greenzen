@@ -39,7 +39,7 @@ const loginUser=async(req,res)=>{
             res.status(401).json({message:"Password is incorrect"})
         }
 
-        res.status(200).json({success:true , message:`${user.usernameOrEmail} login successful`});
+        res.status(200).json({success:true , message:`login successful`});
 
     }
     catch(error)
